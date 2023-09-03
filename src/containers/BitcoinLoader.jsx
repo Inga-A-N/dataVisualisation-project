@@ -2,30 +2,46 @@ import { useState, useEffect } from "react";
 import style from "./BitcoinLoader.module.scss";
 import currencies from "../supportedCurrencies.json";
 import Card from "../components/Card/Card";
+import { fetchData } from "../services/bitcoin-service";
+
+import LineChart from "../components/Chart/LineChart";
+
+// http://api.coindesk.com/v1/bpi/historical/close.json?start=2023-08-01&end=2023-08-31&currency=sgd
+
+// http://api.coindesk.com/v1/bpi/historical/close.json?start=2023-08-01&end=2023-08-31  Only provides historical data till 10/07/22
+
+// https://api.coindesk.com/v1/bpi/currentprice.json
 
 const BitcoinLoader = () => {
   const [loading, setLoading] = useState(true);
   const [priceData, setPriceData] = useState(null);
   const [currency, setCurrency] = useState("AUD");
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(
-        "https://api.coindesk.com/v1/bpi/currentprice.json"
-      );
-      const data = await res.json();
-      setPriceData(data.bpi);
-      console.log(data.bpi);
-      console.log(data.bpi.USD.rate);
+    // async function fetchData() {
+    //   const res = await fetch(
+    //     "http://api.coindesk.com/v1/bpi/historical/close.json?start=2021-08-01&end=2021-08-31"
+    //   );
+    //   const data = await res.json();
+    //   setPriceData(data.bpi);
+    //   console.log(data.bpi);
+    //   console.log(priceData);
+    //   // console.log(data.bpi.USD.rate);
 
-      console.log(data);
+    //   console.log(data);
 
-      setLoading(false);
-    }
-    fetchData();
+    //   setLoading(false);
+    // }
+    fetchData()
+      .then((priceData) => setPriceData(priceData))
+      .finally(() => setLoading(false));
   }, []);
+  console.log(priceData);
+  console.log(loading);
 
   const handleSelect = (e, data) => {
-    setCurrency(data.value);
+    setCurrency(e.target.value);
+
+    //console.log(e.target.value);
   };
 
   return (
@@ -43,16 +59,19 @@ const BitcoinLoader = () => {
                 placeholder="Select your currency"
                 onChange={handleSelect}
               >
-                {currencies.map((currency, index) => (
-                  <option key={index} value={currencies[index].currency}>
-                    {currency.currency}
+                {currencies.map((item, index) => (
+                  <option key={index} value={item.currency}>
+                    {item.currency}
                   </option>
                 ))}
               </select>
             </div>
             <div className={style.price}>
-              <Card currency={currency} />
+              <Card selectedCurrency={currency} />
             </div>
+          </div>
+          <div>
+            <LineChart currentData={priceData} />
           </div>
         </>
       )}
