@@ -4,6 +4,8 @@ import { useState } from "react";
 // import { Data } from "./Data.js";
 import { Pie, Line } from "react-chartjs-2";
 import style from "./LineChart.module.scss";
+import { formatDate } from "../../utils/functions";
+
 Chart.register(CategoryScale);
 
 // const BarChart = () => {
@@ -71,23 +73,14 @@ Chart.register(CategoryScale);
 // export default PieChart;
 
 function LineChart({ currentData }) {
-  const currentDataKeys = Object.keys(currentData);
-  const currentDataValues = Object.values(currentData);
-  console.log(
-    "currentData prop from BarChart:",
-    currentData,
-    "Date",
-    typeof currentDataKeys[0],
-    "Rate",
-    typeof +currentDataValues[0]
-  );
+  console.log("currentData prop from BarChart:", typeof currentData[0].date);
 
   const [chartData, setChartData] = useState({
-    labels: currentDataKeys.map((i) => i),
+    labels: currentData.map((i) => formatDate(i.date)),
     datasets: [
       {
         label: "Bitcoin Rate ",
-        data: currentDataValues.map((i) => i),
+        data: currentData.map((i) => i.priceUsd),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -137,7 +130,7 @@ function LineChart({ currentData }) {
           plugins: {
             title: {
               display: true,
-              text: "Bitcoin data 01/08/21 - 31/08/21",
+              text: "Bitcoin data 01/08/23 - 31/08/23",
             },
             legend: {
               display: false,
