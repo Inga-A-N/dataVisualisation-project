@@ -9,9 +9,13 @@ export const fetchData = async () => {
   return data.data;
 };
 
-export const currentRateData = async () => {
-  const res = await fetch(`https://api.coindesk.com/v1/bpi/currentprice.json`);
+export const currentRateData = async (currency) => {
+  const res = await fetch(
+    `https://api.coinbase.com/v2/prices/BTC-${currency}/spot`
+  );
   const data = await res.json();
-  console.log(data.bpi);
-  return data.bpi;
+  const newNum = +data.data.amount;
+  console.log(data);
+
+  return newNum.toFixed(2);
 };

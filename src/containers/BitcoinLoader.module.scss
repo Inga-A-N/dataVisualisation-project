@@ -4,17 +4,24 @@
   width: 100vw;
   position: fixed;
   top: 0%;
+  img {
+    width: 2rem;
+  }
 }
 
 .priceContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1rem;
   align-items: center;
-  width: 600px;
+
   height: 300px;
 }
 
-// .form {
-//   width: 600px;
-//   margin: auto;
-// }
+.form {
+  display: flex;
+  flex-direction: column;
+}
+select {
+  text-align: center;
+}

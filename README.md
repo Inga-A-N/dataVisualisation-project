@@ -1,8 +1,13 @@
-# React + Vite
+# Data Visualisation Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Goals:
 
-Currently, two official plugins are available:
+- Create a chart for bitcoin prices for the last month
+- Include information about current bitcoin price
+- Set a dropdown menu to select currency for current bitcoin price
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack:
+
+- React
+- chartjs
+- react-chartjs-2

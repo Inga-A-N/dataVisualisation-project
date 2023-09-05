@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./BitcoinLoader.module.scss";
 import currencies from "../supportedCurrencies.json";
 import Card from "../components/Card/Card";
-import { fetchData } from "../services/bitcoin-service";
+import { currentRateData, fetchData } from "../services/bitcoin-service";
 
 import LineChart from "../components/Chart/LineChart";
 
@@ -16,37 +16,35 @@ const BitcoinLoader = () => {
   const [loading, setLoading] = useState(true);
   const [priceData, setPriceData] = useState(null);
   const [currency, setCurrency] = useState("AUD");
+  const [currentPrice, setCurrentPrice] = useState(null);
   useEffect(() => {
-    // async function fetchData() {
-    //   const res = await fetch(
-    //     "http://api.coindesk.com/v1/bpi/historical/close.json?start=2021-08-01&end=2021-08-31"
-    //   );
-    //   const data = await res.json();
-    //   setPriceData(data.bpi);
-    //   console.log(data.bpi);
-    //   console.log(priceData);
-    //   // console.log(data.bpi.USD.rate);
-
-    //   console.log(data);
-
-    //   setLoading(false);
-    // }
     fetchData()
       .then((priceData) => setPriceData(priceData))
       .finally(() => setLoading(false));
+
+    currentRateData(currency).then((currentPrice) =>
+      setCurrentPrice(currentPrice)
+    );
   }, []);
-  console.log(priceData);
-  console.log(loading);
+  useEffect(() => {
+    currentRateData(currency).then((currentPrice) =>
+      setCurrentPrice(currentPrice)
+    );
+  }, [currency]);
 
   const handleSelect = (e, data) => {
     setCurrency(e.target.value);
-
-    //console.log(e.target.value);
   };
 
   return (
     <>
-      <div className={style.nav}>Hello</div>
+      <div className={style.nav}>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
+          alt="bitcoin icon"
+        />
+        Hello
+      </div>
       {loading ? (
         <div>
           <p>Loading...</p>
@@ -55,7 +53,9 @@ const BitcoinLoader = () => {
         <>
           <div className={style.priceContainer}>
             <div className={style.form}>
+              <label htmlFor="selectCurrency">Select Currency</label>
               <select
+                name="selectCurrency"
                 placeholder="Select your currency"
                 onChange={handleSelect}
               >
@@ -67,7 +67,7 @@ const BitcoinLoader = () => {
               </select>
             </div>
             <div className={style.price}>
-              <Card selectedCurrency={currency} />
+              <Card selectedCurrency={currency} currentRate={currentPrice} />
             </div>
           </div>
           <div>

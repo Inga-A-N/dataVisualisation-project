@@ -73,8 +73,6 @@ Chart.register(CategoryScale);
 // export default PieChart;
 
 function LineChart({ currentData }) {
-  console.log("currentData prop from BarChart:", typeof currentData[0].date);
-
   const [chartData, setChartData] = useState({
     labels: currentData.map((i) => formatDate(i.date)),
     datasets: [
