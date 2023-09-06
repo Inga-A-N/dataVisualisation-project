@@ -1,10 +1,11 @@
 export const fetchData = async () => {
   const res = await fetch(
-    // `http://api.coindesk.com/v1/bpi/historical/close.json?start=2021-08-01&end=2021-08-31`
-    "https://api.coincap.io/v2/assets/bitcoin/history?interval=d1&start=	1690812000000&end=	1693490400000"
+    `https://api.coincap.io/v2/assets/bitcoin/history?interval=d1&start=	${
+      new Date().getTime() - 2592000000
+    }&end=	${new Date().getTime()}`
   );
   const data = await res.json();
-  console.log(data.data);
+  // console.log(data.data);
 
   return data.data;
 };
@@ -15,7 +16,6 @@ export const currentRateData = async (currency) => {
   );
   const data = await res.json();
   const newNum = +data.data.amount;
-  console.log(data);
 
   return newNum.toFixed(2);
 };
