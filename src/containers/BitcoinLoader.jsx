@@ -4,7 +4,8 @@ import currencies from "../supportedCurrencies.json";
 import Card from "../components/Card/Card";
 import { currentRateData, fetchData } from "../services/bitcoin-service";
 
-import LineChart from "../components/Chart/LineChart";
+import LineChart, { BarChart } from "../components/Chart/LineChart";
+import Toggle from "../components/Toggle/Toggle";
 
 // http://api.coindesk.com/v1/bpi/historical/close.json?start=2023-08-01&end=2023-08-31&currency=sgd
 
@@ -17,6 +18,7 @@ const BitcoinLoader = () => {
   const [priceData, setPriceData] = useState(null);
   const [currency, setCurrency] = useState("AUD");
   const [currentPrice, setCurrentPrice] = useState(null);
+  const [toggle, setToggle] = useState(true);
   useEffect(() => {
     fetchData()
       .then((priceData) => setPriceData(priceData))
@@ -34,6 +36,9 @@ const BitcoinLoader = () => {
 
   const handleSelect = (e, data) => {
     setCurrency(e.target.value);
+  };
+  const handleToggle = (e) => {
+    setToggle(!toggle);
   };
 
   return (
@@ -71,7 +76,13 @@ const BitcoinLoader = () => {
             </div>
           </div>
           <div>
-            <LineChart currentData={priceData} />
+            <Toggle handleToggle={handleToggle} toggle={toggle} />
+
+            {toggle ? (
+              <LineChart currentData={priceData} />
+            ) : (
+              <BarChart currentData={priceData} />
+            )}
           </div>
         </>
       )}
