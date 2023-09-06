@@ -31,7 +31,7 @@ export const BarChart = ({ currentData }) => {
           plugins: {
             title: {
               display: true,
-              text: "Bitcoin data for the past 30 days",
+              text: "Bitcoin data for the past 30 days (USD)",
             },
             legend: {
               display: false,
@@ -42,6 +42,51 @@ export const BarChart = ({ currentData }) => {
     </div>
   );
 };
+
+function LineChart({ currentData }) {
+  const [chartData, setChartData] = useState({
+    labels: currentData.map((i) => formatDate(i.date)),
+    datasets: [
+      {
+        label: "Bitcoin Rate ",
+        data: currentData.map((i) => i.priceUsd),
+        backgroundColor: [
+          "#f3ba2f",
+          // "rgba(75,192,192,1)",
+          // "#ecf0f1",
+          // "#50AF95",
+          // "#2a71d0",
+        ],
+
+        borderColor: "black",
+        borderWidth: 1,
+      },
+    ],
+  });
+  return (
+    <div className={style.chartContainer}>
+      <h2 style={{ textAlign: "center" }}>Line Chart</h2>
+      <Line
+        data={chartData}
+        options={{
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Bitcoin data for the past 30 days (USD)",
+            },
+            legend: {
+              display: false,
+            },
+          },
+        }}
+      />
+    </div>
+  );
+}
+
+export default LineChart;
+
 // function PieChart() {
 //   const [chartData, setChartData] = useState({
 //     labels: Data.map((data) => data.year),
@@ -79,48 +124,6 @@ export const BarChart = ({ currentData }) => {
 //   );
 // }
 // export default PieChart;
-
-function LineChart({ currentData }) {
-  const [chartData, setChartData] = useState({
-    labels: currentData.map((i) => formatDate(i.date)),
-    datasets: [
-      {
-        label: "Bitcoin Rate ",
-        data: currentData.map((i) => i.priceUsd),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-
-        borderColor: "black",
-        borderWidth: 1,
-      },
-    ],
-  });
-  return (
-    <div className={style.chartContainer}>
-      <h2 style={{ textAlign: "center" }}>Line Chart</h2>
-      <Line
-        data={chartData}
-        options={{
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: "Bitcoin data for the past 30 days",
-            },
-            legend: {
-              display: false,
-            },
-          },
-        }}
-      />
-    </div>
-  );
-}
 
 // const currentData = [
 //   { rate: 39882.385, date: 1 },
@@ -181,4 +184,3 @@ function LineChart({ currentData }) {
 //     </div>
 //   );
 // }
-export default LineChart;
