@@ -12,4 +12,4 @@
 - chartjs
 - react-chartjs-2
 
-## [LINK](inga-datavisualisation-project.netlify.app)
+## [LINK](https://inga-datavisualisation-project.netlify.app/)
