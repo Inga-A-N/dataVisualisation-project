@@ -62,18 +62,13 @@ const BitcoinLoader = () => {
                 name="selectCurrency"
                 placeholder="Select your currency"
                 onChange={handleSelect}
+                defaultValue={"AUD"}
               >
-                {currencies.map((item, index) =>
-                  item.currency == "AUD" ? (
-                    <option key={index} value={item.currency} selected>
-                      {item.currency}
-                    </option>
-                  ) : (
-                    <option key={index} value={item.currency}>
-                      {item.currency}
-                    </option>
-                  )
-                )}
+                {currencies.map((item, index) => (
+                  <option key={index} value={item.currency}>
+                    {item.currency}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={style.price}>

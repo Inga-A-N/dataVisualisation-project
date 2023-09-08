@@ -37,6 +37,12 @@ export const BarChart = ({ currentData }) => {
               display: false,
             },
           },
+          indexAxis: "x",
+          scales: {
+            y: {
+              min: 22000, // minimum will be 22000, unless there is a lower value.
+            },
+          },
         }}
       />
     </div>
